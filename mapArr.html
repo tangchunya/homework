@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in arr1">
+                姓名:{{item.name}}
+                年龄:{{item.age}}
+                性别:{{item.sex}}
+            </li>
+        </ul>
+        姓名:
+        <input type="text" v-model="userinfo.name">
+        <br>
+        性别:
+        <input type="text" v-model="userinfo.sex">
+        <br>
+        年龄:
+        <input type="text" v-model="userinfo.age">
+        <br>
+        <button v-on:click="send">提交</button>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            methods:{
+                send:function(){
+                    if(!this.userinfo.name | !this.userinfo.sex | !this.userinfo.age){
+                        return
+                    }
+                    this.arr1.push(this.userinfo)
+                    this.userinfo = {
+                        name:"",
+                        age:"",
+                        sex:""
+                    }
+                }
+            },
+            data:{
+                userinfo:{
+                    name:"",
+                    age:"",
+                    sex:""
+                },
+                arr1:[{
+                    name:"张三",
+                    age:18,
+                    sex:"男"
+                },{
+                    name:"王晓晓",
+                    age:20,
+                    sex:"女"
+                }]
+            }
+        })
+    </script>
+</body>
+</html>

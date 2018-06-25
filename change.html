@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <style>
+        .tab{
+            width:300px;
+        }
+        .tab .header{
+            height:30px;
+            line-height: 30px;
+        }
+        .tab .header .item{
+            width: 100px;
+            float: left;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="tab">
+            <div class="header">
+                <div class="item" v-for="(item,index) in arr" v-on:click="tagIndex = index">{{item}}</div>
+            </div>
+            <div class="content">
+                <div v-for="(item,index) in arr1" v-show="tagIndex == index">
+                    姓名:{{item.name}}
+                    年龄:{{item.age}}
+                    性别:{{item.sex}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                tagIndex:0,
+                show:true,
+                arr:["张三","李四","王麻子"],
+                arr1:[{
+                    name:"张三",
+                    age:18,
+                    sex:"男"
+                },{
+                    name:"李四",
+                    age:20,
+                    sex:"女"
+                },{
+                    name:"王麻子",
+                    age:16,
+                    sex:"女"
+                }]
+            }
+        })
+    </script>
+</body>
+</html>
