@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>computed 计算</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    <style>
+        .input{
+            width: 300px;
+            height: 30px;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        .input input{
+            width: 300px;
+            height: 30px;
+        }
+
+        .input ul{
+            width: 300px;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            padding: 0;
+            border: 1px solid #ddd;
+            border-bottom: none;
+        }
+
+        .input ul li {
+            height: 30px;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            list-style: none;
+            
+        }
+
+        .input ul li:hover{
+            background: rgba(0, 0, 0, .5)
+        }
+        p{
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        结果：{{count}}
+
+        <!-- // 自动计算 -->
+        <br>
+        <input type="text" v-model="num">
+
+        <br>
+        补全邮箱地址:
+
+        <div class="input">
+            <input type="text" v-model="email" @keyup="handler">
+            <ul v-show="email">
+                <li v-for="item in emailList" @click="email=item">
+                    {{item}}
+                </li>
+            </ul>
+        </div>
+
+        <br>
+        <p>搜索功能:</p>
+        <div class="input">
+            <input type="text" v-model="search">
+            <ul v-show="search">
+                <li v-for="item in searchList" @click="search=item">
+                    {{item}}
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                num:0,
+                email:"",
+                selectIndex:0,
+                search:"",
+                page:0,
+                users:[
+                    "张三",
+                    "张文",
+                    "老李",
+                    "老刘",
+                    "小伙子",
+                    "码子",
+                    "呵呵"
+                ]
+            },
+            methods:{
+                // cc(){
+                //     return Number(this.num) + 10
+                // }
+                handler(e){
+                   // 键盘上 38
+                    // console.info(e.keyCode,"keyCode")
+                    if(e.keyCode == 38){
+                        this.selectIndex--
+                        if(this.selectIndex < 0){
+                            this.selectIndex = this.emailList.length-1
+                        }
+                        console.info(this.selectIndex,"selectIndex")
+                    }
+                    if(e.keyCode == 40){
+                        this.selectIndex++
+                        if(this.selectIndex > this.emailList.length-1){
+                            this.selectIndex = 0
+                        }
+                        console.info(this.selectIndex,"selectIndex")
+                    }
+                   //this.selectIndex++
+                   // 键盘下 40
+                   //this.selectIndex--
+                   // 键盘enter
+                   // this.emailList[this.selectIndex]
+                    if(e.keyCode == 13){
+                        this.email = this.emailList[this.selectIndex]
+                    }
+                }
+            },
+            computed:{
+                searchList(){
+                    return this.users.filter((value,index)=>{
+                        return value.indexOf(this.search) != -1
+                    })
+                },
+                emailList(){
+                    //if(!this.email) return []
+                    if(/@/.test(this.email)) return []
+                    return [
+                        this.email + '@qq.com',
+                        this.email + '@163.com',
+                        this.email + '@gmail.com'
+                    ]
+                },
+                count(){ // 计算+10的和
+
+                    // 它会检测相关变量（data的成员）的变化然后重新计算
+                    // 返回计算结果
+                    return Number(this.num) + 10 
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>
