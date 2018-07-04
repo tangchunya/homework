@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bootstrap的icon组件和input组件</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <icon name="asterisk"></icon>
+        <icon name="plus"></icon> -->
+    </div>
+    <script>
+        //icon组件
+        Vue.component('icon',{
+            props:['name'],
+            template:`
+            <button class="btn btn-default">
+                <i :class="['glyphicon','glyphicon-'+name]"></i>
+            </button>
+            `
+        })
+        //输入框组件
+        Vue.component('v-input',{
+            props:["lValue","rValue","placeholder","num"],
+            template:`
+            <div class="input-group">
+                <span class="input-group-addon" :id="['basic-addon'+num]" v-if="lValue">{{lValue}}</span>
+                <input type="text" class="form-control" :placeholder="placeholder" :aria-describedby="['basic-addon'+num]">
+                <span class="input-group-addon" :id="['basic-addon'+num]" v-if="rValue">{{rValue}}</span>
+            </div>
+            `
+        })
+        new Vue({
+            el:'#app',
+            template:`
+            <div id="app">
+                <icon name="asterisk" />
+                <icon name="plus" />
+                <v-input lValue="@" placeholder="Username" num="1" />
+                <v-input rValue="@example.com" placeholder="Recipient's username" num="2" />
+                <v-input lValue="$" rValue=".00" />
+                <v-input lValue="https://example.com/users/" num="3" />
+            <div>
+            `
+        })
+    </script>
+</body>
+</html>
